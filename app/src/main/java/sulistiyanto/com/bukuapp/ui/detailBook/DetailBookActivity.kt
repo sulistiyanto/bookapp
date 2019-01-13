@@ -17,6 +17,8 @@ class DetailBookActivity : BaseActivity() {
 
     override fun initLayout() {
         setContentView(R.layout.activity_detail_book)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail Buku"
     }
 
 }

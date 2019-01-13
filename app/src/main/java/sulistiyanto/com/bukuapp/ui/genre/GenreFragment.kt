@@ -1,5 +1,6 @@
 package sulistiyanto.com.bukuapp.ui.genre
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import sulistiyanto.com.bukuapp.application.App
 import sulistiyanto.com.bukuapp.data.model.GenreModel
 import sulistiyanto.com.bukuapp.di.subcomponent.FragmentComponent
 import sulistiyanto.com.bukuapp.ui.base.BaseFragment
+import sulistiyanto.com.bukuapp.ui.bookByGenre.BookGenreActivity
 import javax.inject.Inject
 
 
@@ -52,6 +54,8 @@ class GenreFragment : BaseFragment(), GenreView {
     }
 
     override fun displayBookByGenre(genre: GenreModel) {
-
+        val intent = Intent(context, BookGenreActivity::class.java)
+        intent.putExtra("id", "${genre.id}")
+        startActivity(intent)
     }
 }

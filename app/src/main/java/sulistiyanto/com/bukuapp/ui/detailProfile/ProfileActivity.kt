@@ -17,6 +17,8 @@ class ProfileActivity : BaseActivity() {
 
     override fun initLayout() {
         setContentView(R.layout.activity_profile)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail Profil"
     }
 
 }

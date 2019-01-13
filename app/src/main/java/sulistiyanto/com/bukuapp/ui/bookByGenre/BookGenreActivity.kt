@@ -17,5 +17,7 @@ class BookGenreActivity : BaseActivity() {
 
     override fun initLayout() {
         setContentView(R.layout.activity_book_genre)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Buku"
     }
 }

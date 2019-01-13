@@ -1,6 +1,7 @@
 package sulistiyanto.com.bukuapp.ui.book
 
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
@@ -13,6 +14,7 @@ import sulistiyanto.com.bukuapp.application.App
 import sulistiyanto.com.bukuapp.data.model.BookModel
 import sulistiyanto.com.bukuapp.di.subcomponent.FragmentComponent
 import sulistiyanto.com.bukuapp.ui.base.BaseFragment
+import sulistiyanto.com.bukuapp.ui.detailBook.DetailBookActivity
 import javax.inject.Inject
 
 /**
@@ -57,6 +59,9 @@ class BookFragment : BaseFragment(), BookView {
     }
 
     override fun detailBook(book: BookModel) {
+        val intent = Intent(context, DetailBookActivity::class.java)
+        intent.putExtra("book", book)
+        startActivity(intent)
     }
 
 }

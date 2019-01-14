@@ -64,4 +64,7 @@ class BookFragment : BaseFragment(), BookView {
         startActivity(intent)
     }
 
+    override fun displayError(message: String) {
+
+    }
 }

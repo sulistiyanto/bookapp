@@ -7,13 +7,13 @@ import javax.inject.Inject
 
 class BookPresenter @Inject constructor(): BasePresenter<BookView>() {
     fun getData() {
-        val list = ArrayList<BookModel>()
-        for (i in 1..20) {
-            list.add(BookModel(i, "", ""))
-        }
-        val adapter = AdapterBook(list) { book ->
-            view?.detailBook(book)
-        }
-        view?.displayBookList(adapter)
+//        val list = ArrayList<BookModel>()
+//        for (i in 1..20) {
+//            list.add(BookModel(i, "", ""))
+//        }
+//        val adapter = AdapterBook(list) { book ->
+//            view?.detailBook(book)
+//        }
+//        view?.displayBookList(adapter)
     }
 }

@@ -6,6 +6,8 @@ import sulistiyanto.com.bukuapp.ui.base.BaseView
 
 interface GenreView: BaseView {
 
+    fun viewLoadingProgress()
+    fun hideLoadingProgress()
     fun displayGenreList(adapter: AdapterGenre)
     fun displayBookByGenre(genre: GenreModel)
 }

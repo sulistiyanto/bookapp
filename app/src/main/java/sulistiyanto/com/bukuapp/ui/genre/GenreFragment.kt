@@ -6,6 +6,9 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_genre.*
 
 import sulistiyanto.com.bukuapp.R
 import sulistiyanto.com.bukuapp.adapter.AdapterGenre
@@ -14,6 +17,7 @@ import sulistiyanto.com.bukuapp.data.model.GenreModel
 import sulistiyanto.com.bukuapp.di.subcomponent.FragmentComponent
 import sulistiyanto.com.bukuapp.ui.base.BaseFragment
 import sulistiyanto.com.bukuapp.ui.bookByGenre.BookGenreActivity
+import sulistiyanto.com.bukuapp.utilities.ConnectingNetwork
 import javax.inject.Inject
 
 
@@ -24,9 +28,12 @@ import javax.inject.Inject
 class GenreFragment : BaseFragment(), GenreView {
 
     private var rvGenre: RecyclerView? = null
+    private var progressBar : ProgressBar? = null
 
     @Inject
     lateinit var presenter: GenrePresenter
+    @Inject
+    lateinit var connectingNetwork: ConnectingNetwork
 
     override fun getFragmentLayout(): Int = R.layout.fragment_genre
 
@@ -42,11 +49,13 @@ class GenreFragment : BaseFragment(), GenreView {
     override fun initLayout(rootView: View?) {
         presenter.attach(this)
         rvGenre = rootView?.findViewById(R.id.rv_genre)
+        progressBar = rootView?.findViewById(R.id.progressBar)
+
         rvGenre?.layoutManager = LinearLayoutManager(context)
         rvGenre?.itemAnimator = DefaultItemAnimator()
         rvGenre?.setHasFixedSize(true)
 
-        presenter.getData()
+        presenter.getData(connectingNetwork.isConnecting())
     }
 
     override fun displayGenreList(adapter: AdapterGenre) {
@@ -57,5 +66,17 @@ class GenreFragment : BaseFragment(), GenreView {
         val intent = Intent(context, BookGenreActivity::class.java)
         intent.putExtra("id", "${genre.id}")
         startActivity(intent)
+    }
+
+    override fun viewLoadingProgress() {
+        progressBar?.visibility = View.VISIBLE
+    }
+
+    override fun hideLoadingProgress() {
+        progressBar?.visibility = View.GONE
+    }
+
+    override fun displayError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

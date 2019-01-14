@@ -6,6 +6,8 @@ import sulistiyanto.com.bukuapp.ui.base.BaseView
 
 interface ProfileView: BaseView {
 
+    fun viewLoadingProgress()
+    fun hideLoadingProgress()
     fun displayProfileList(adapter: AdapterProfile)
     fun detailProfile(profile: ProfileModel)
 }

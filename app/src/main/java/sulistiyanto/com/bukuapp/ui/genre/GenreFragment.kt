@@ -64,7 +64,8 @@ class GenreFragment : BaseFragment(), GenreView {
 
     override fun displayBookByGenre(genre: GenreModel) {
         val intent = Intent(context, BookGenreActivity::class.java)
-        intent.putExtra("id", "${genre.id}")
+        intent.putExtra("id", genre.id)
+        intent.putExtra("title", genre.title)
         startActivity(intent)
     }
 

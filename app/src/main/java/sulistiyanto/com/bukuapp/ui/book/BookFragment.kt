@@ -7,6 +7,8 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 
 import sulistiyanto.com.bukuapp.R
 import sulistiyanto.com.bukuapp.adapter.AdapterBook
@@ -15,6 +17,7 @@ import sulistiyanto.com.bukuapp.data.model.BookModel
 import sulistiyanto.com.bukuapp.di.subcomponent.FragmentComponent
 import sulistiyanto.com.bukuapp.ui.base.BaseFragment
 import sulistiyanto.com.bukuapp.ui.detailBook.DetailBookActivity
+import sulistiyanto.com.bukuapp.utilities.ConnectingNetwork
 import javax.inject.Inject
 
 /**
@@ -25,10 +28,12 @@ class BookFragment : BaseFragment(), BookView {
 
     private lateinit var gridLayoutManager: GridLayoutManager
     private var rvBook: RecyclerView? = null
+    private var progressBar : ProgressBar? = null
 
     @Inject
     lateinit var presenter: BookPresenter
-
+    @Inject
+    lateinit var connectingNetwork: ConnectingNetwork
 
     override fun getFragmentLayout(): Int = R.layout.fragment_book
 
@@ -44,13 +49,14 @@ class BookFragment : BaseFragment(), BookView {
     override fun initLayout(rootView: View?) {
         presenter.attach(this)
         rvBook = rootView?.findViewById(R.id.rv_book)
+        progressBar = rootView?.findViewById(R.id.progressBar)
 
         gridLayoutManager = GridLayoutManager(context,2)
         rvBook?.layoutManager = gridLayoutManager
         rvBook?.itemAnimator = DefaultItemAnimator()
         rvBook?.setHasFixedSize(true)
 
-        presenter.getData()
+        presenter.getData(connectingNetwork.isConnecting())
     }
 
     override fun displayBookList(adapter: AdapterBook) {
@@ -60,11 +66,19 @@ class BookFragment : BaseFragment(), BookView {
 
     override fun detailBook(book: BookModel) {
         val intent = Intent(context, DetailBookActivity::class.java)
-        intent.putExtra("book", book)
+        intent.putExtra("id", book.id)
         startActivity(intent)
     }
 
-    override fun displayError(message: String) {
+    override fun viewLoadingProgress() {
+        progressBar?.visibility = View.VISIBLE
+    }
 
+    override fun hideLoadingProgress() {
+        progressBar?.visibility = View.GONE
+    }
+
+    override fun displayError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

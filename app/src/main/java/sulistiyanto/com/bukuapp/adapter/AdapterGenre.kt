@@ -28,8 +28,8 @@ class AdapterGenre(private var items: List<GenreModel>,
     }
 
     class GenreHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val txtTitle = itemView.txt_title
-        val image = itemView.image
+        private val txtTitle = itemView.txt_title
+        private val image = itemView.image
 
         fun bindData(genreModel: GenreModel, listener: (GenreModel) -> Unit) {
 

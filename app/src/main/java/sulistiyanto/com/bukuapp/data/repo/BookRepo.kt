@@ -4,6 +4,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import sulistiyanto.com.bukuapp.data.apiService.APIServiceBook
+import sulistiyanto.com.bukuapp.data.model.BookModel
+import sulistiyanto.com.bukuapp.data.model.DetailBookModel
 import sulistiyanto.com.bukuapp.data.model.GenreModel
 import sulistiyanto.com.bukuapp.data.model.ProfileModel
 import javax.inject.Inject
@@ -27,17 +29,17 @@ class BookRepo @Inject constructor(private val apiService: APIServiceBook) {
             )
 
     fun getBook(
-        token: String,
-        response: (List<GenreModel>?) -> Unit,
+        token: String, limit: String,
+        response: (List<BookModel>?) -> Unit,
         error: (Throwable) -> Unit
     ): Disposable =
-        apiService.getGenre(token)
+        apiService.getBook(token, limit)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
             .subscribe(
                 {
-                    response(it?.resource)
+                    response(it?.result)
                 },
                 { error(it) }
             )
@@ -48,6 +50,38 @@ class BookRepo @Inject constructor(private val apiService: APIServiceBook) {
         error: (Throwable) -> Unit
     ): Disposable =
         apiService.getWriter(token, limit)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .subscribe(
+                {
+                    response(it?.result)
+                },
+                { error(it) }
+            )
+
+    fun getBookByGenre(
+        token: String, id: String,
+        response: (List<BookModel>?) -> Unit,
+        error: (Throwable) -> Unit
+    ): Disposable =
+        apiService.bookByGenre(token, id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .subscribe(
+                {
+                    response(it?.result)
+                },
+                { error(it) }
+            )
+
+    fun getDetailBook(
+        token: String, id: String,
+        response: (DetailBookModel?) -> Unit,
+        error: (Throwable) -> Unit
+    ): Disposable =
+        apiService.getBookDetail(token, id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())

@@ -37,9 +37,9 @@ class AdapterProfile(
 
     class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val txtName = itemView.txt_name
-        val txtFollower = itemView.txt_follower
-        val imgProfile = itemView.image
+        private val txtName = itemView.txt_name
+        private val txtFollower = itemView.txt_follower
+        private val imgProfile = itemView.image
 
         @SuppressLint("SetTextI18n")
         fun bindData(

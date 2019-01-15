@@ -62,7 +62,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
 
     override fun detailProfile(profile: ProfileModel) {
         val intent = Intent(context, ProfileActivity::class.java)
-        intent.putExtra("profile", profile)
+        intent.putExtra("id", profile.id)
         startActivity(intent)
     }
 

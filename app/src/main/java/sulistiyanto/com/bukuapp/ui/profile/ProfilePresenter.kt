@@ -9,7 +9,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProfilePresenter @Inject constructor(private val repo: BookRepo, private val context: Context) : BasePresenter<ProfileView>() {
+class ProfilePresenter @Inject constructor(private val repo: BookRepo, private val context: Context) :
+    BasePresenter<ProfileView>() {
 
     fun getData(connecting: Boolean) {
         if (connecting) {

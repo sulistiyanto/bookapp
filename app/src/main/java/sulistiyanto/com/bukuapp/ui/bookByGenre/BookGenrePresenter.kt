@@ -1,4 +1,4 @@
-package sulistiyanto.com.bukuapp.ui.book
+package sulistiyanto.com.bukuapp.ui.bookByGenre
 
 import android.content.Context
 import sulistiyanto.com.bukuapp.adapter.AdapterBook
@@ -7,15 +7,15 @@ import sulistiyanto.com.bukuapp.ui.base.BasePresenter
 import sulistiyanto.com.bukuapp.utilities.token
 import javax.inject.Inject
 
-class BookPresenter @Inject constructor(private val repo: BookRepo, private val context: Context) :
-    BasePresenter<BookView>() {
+class BookGenrePresenter @Inject constructor(private val repo: BookRepo, private val context: Context) :
+    BasePresenter<BookGenreView>() {
 
-    fun getData(connecting: Boolean) {
+    fun getBookByGenre(connecting: Boolean, id: Int) {
         if (connecting) {
             view?.viewLoadingProgress()
             disposables.add(
-                repo.getBook(
-                    token, "10",
+                repo.getBookByGenre(
+                    token, id.toString(),
                     response = { listProfile ->
                         view?.hideLoadingProgress()
                         val adapter = listProfile?.let {

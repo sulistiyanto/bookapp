@@ -1,10 +1,7 @@
 package sulistiyanto.com.bukuapp.data.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class WriterByUserId(
     @SerializedName("id") val id: Int?,
     @SerializedName("user_id") val userId: Int?,
@@ -14,4 +11,4 @@ data class WriterByUserId(
     @SerializedName("schedule_task") val scheduleTask: String?,
     @SerializedName("royalty_id") val royaltyId: Int?,
     @SerializedName("User_by_user_id") val userByUserId: UserByUserId?
-) : Parcelable
+)

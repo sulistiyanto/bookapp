@@ -50,12 +50,15 @@ class GenreFragment : BaseFragment(), GenreView {
         presenter.attach(this)
         rvGenre = rootView?.findViewById(R.id.rv_genre)
         progressBar = rootView?.findViewById(R.id.progressBar)
+        initRecyclerView()
 
+        presenter.getData(connectingNetwork.isConnecting())
+    }
+
+    private fun initRecyclerView() {
         rvGenre?.layoutManager = LinearLayoutManager(context)
         rvGenre?.itemAnimator = DefaultItemAnimator()
         rvGenre?.setHasFixedSize(true)
-
-        presenter.getData(connectingNetwork.isConnecting())
     }
 
     override fun displayGenreList(adapter: AdapterGenre) {

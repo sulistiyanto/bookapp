@@ -4,10 +4,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import sulistiyanto.com.bukuapp.data.apiService.APIServiceBook
-import sulistiyanto.com.bukuapp.data.model.BookModel
-import sulistiyanto.com.bukuapp.data.model.DetailBookModel
-import sulistiyanto.com.bukuapp.data.model.GenreModel
-import sulistiyanto.com.bukuapp.data.model.ProfileModel
+import sulistiyanto.com.bukuapp.data.model.*
 import javax.inject.Inject
 
 class BookRepo @Inject constructor(private val apiService: APIServiceBook) {
@@ -82,6 +79,22 @@ class BookRepo @Inject constructor(private val apiService: APIServiceBook) {
         error: (Throwable) -> Unit
     ): Disposable =
         apiService.getBookDetail(token, id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .subscribe(
+                {
+                    response(it?.result)
+                },
+                { error(it) }
+            )
+
+    fun getDetailProfile(
+        token: String, id: String,
+        response: (DetailProfileModel?) -> Unit,
+        error: (Throwable) -> Unit
+    ): Disposable =
+        apiService.getWriterDetail(token, id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())

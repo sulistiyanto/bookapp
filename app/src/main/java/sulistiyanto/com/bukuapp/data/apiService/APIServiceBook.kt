@@ -42,5 +42,5 @@ interface APIServiceBook {
     fun getWriterDetail(
         @Header("x-dreamfactory-api-key") token: String,
         @Path("user_id") userId: String
-    ): Observable<List<GenreModel>?>
+    ): Observable<DetailProfileResponseModel?>
 }

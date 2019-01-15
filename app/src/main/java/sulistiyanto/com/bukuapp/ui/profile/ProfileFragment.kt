@@ -49,11 +49,15 @@ class ProfileFragment : BaseFragment(), ProfileView {
         rvProfile = rootView?.findViewById(R.id.rv_profile)
         progressBar = rootView?.findViewById(R.id.progressBar)
 
+        initRecyclerView()
+
+        presenter.getData(connectingNetwork.isConnecting())
+    }
+
+    private fun initRecyclerView() {
         rvProfile?.layoutManager = LinearLayoutManager(context)
         rvProfile?.itemAnimator = DefaultItemAnimator()
         rvProfile?.setHasFixedSize(true)
-
-        presenter.getData(connectingNetwork.isConnecting())
     }
 
     override fun displayProfileList(adapter: AdapterProfile) {

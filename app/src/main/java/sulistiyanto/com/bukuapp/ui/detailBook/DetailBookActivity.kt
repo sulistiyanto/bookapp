@@ -1,10 +1,12 @@
 package sulistiyanto.com.bukuapp.ui.detailBook
 
-import android.util.Log
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_detail_book.*
 import sulistiyanto.com.bukuapp.R
+import sulistiyanto.com.bukuapp.adapter.AdapterReview
 import sulistiyanto.com.bukuapp.application.App
 import sulistiyanto.com.bukuapp.data.model.DetailBookModel
 import sulistiyanto.com.bukuapp.di.subcomponent.ActivityComponent
@@ -35,21 +37,34 @@ class DetailBookActivity : BaseActivity(), DetailBookView {
         setContentView(R.layout.activity_detail_book)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Detail Buku"
+        initRecyclerView()
 
         val id = intent.getIntExtra("id", 0)
 
         presenter.getDetailBook(connectingNetwork.isConnecting(), id)
     }
 
+    private fun initRecyclerView() {
+        rvReview.layoutManager = LinearLayoutManager(this)
+        rvReview.itemAnimator = DefaultItemAnimator()
+        rvReview.setHasFixedSize(true)
+        rvReview.isNestedScrollingEnabled = false
+    }
+
     override fun displayDetail(detailBook: DetailBookModel?) {
 
+        ratingBar.rating = detailBook?.decimalRate!!
         GlideApp.with(this)
-            .load("$baseURLImage${detailBook?.coverURl}&$api")
+            .load("$baseURLImage${detailBook.coverURl}&$api")
             .placeholder(R.mipmap.ic_launcher)
             .into(image)
 
-        txtTitle.text = detailBook?.title
-        txtDesc.text = detailBook?.desc
+        txtTitle.text = detailBook.title
+        txtDesc.text = detailBook.desc
+        txtWriter.text = ": ${detailBook.writerByWriterId?.userByUserId?.name}"
+
+        val adapter = detailBook.reviews?.let { AdapterReview(this, it) }
+        rvReview.adapter = adapter
     }
 
     override fun viewLoadingProgress() {

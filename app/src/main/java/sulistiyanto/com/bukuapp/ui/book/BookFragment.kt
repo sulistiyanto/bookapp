@@ -51,10 +51,7 @@ class BookFragment : BaseFragment(), BookView {
         rvBook = rootView?.findViewById(R.id.rv_book)
         progressBar = rootView?.findViewById(R.id.progressBar)
 
-        gridLayoutManager = GridLayoutManager(context,2)
-        rvBook?.layoutManager = gridLayoutManager
-        rvBook?.itemAnimator = DefaultItemAnimator()
-        rvBook?.setHasFixedSize(true)
+        initRecyclerView()
 
         presenter.getData(connectingNetwork.isConnecting())
     }
@@ -80,5 +77,12 @@ class BookFragment : BaseFragment(), BookView {
 
     override fun displayError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initRecyclerView() {
+        gridLayoutManager = GridLayoutManager(context,2)
+        rvBook?.layoutManager = gridLayoutManager
+        rvBook?.itemAnimator = DefaultItemAnimator()
+        rvBook?.setHasFixedSize(true)
     }
 }

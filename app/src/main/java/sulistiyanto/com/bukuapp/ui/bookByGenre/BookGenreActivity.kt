@@ -37,11 +37,7 @@ class BookGenreActivity : BaseActivity(), BookGenreView {
         presenter.attach(this)
         setContentView(R.layout.activity_book_genre)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        gridLayoutManager = GridLayoutManager(this,2)
-        rvBook?.layoutManager = gridLayoutManager
-        rvBook?.itemAnimator = DefaultItemAnimator()
-        rvBook?.setHasFixedSize(true)
+        initRecyclerView()
 
         val id = intent.getIntExtra("id", 0)
         val title = intent.getStringExtra("title")
@@ -70,5 +66,12 @@ class BookGenreActivity : BaseActivity(), BookGenreView {
 
     override fun displayError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initRecyclerView() {
+        gridLayoutManager = GridLayoutManager(this, 2)
+        rvBook?.layoutManager = gridLayoutManager
+        rvBook?.itemAnimator = DefaultItemAnimator()
+        rvBook?.setHasFixedSize(true)
     }
 }
